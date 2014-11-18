@@ -24,7 +24,7 @@ Python Flask (web framework) deployed with Apache
 
 These instructions are for Debian, for other Linux flavors modify the Apache parts accordingly
 
-1. Make sure apache2 and mod_wsgi are installed
+Make sure apache2 and mod_wsgi are installed
 
 ```
 sudo apt-get install -y apache2
@@ -33,7 +33,7 @@ sudo a2enmod rewrite
 sudo apt-get install -y apache2-utils
 ```
 
-2. For this examples, we assume your app is in /srv/www/app. In /etc/apache2/sites-available/000-default.conf file add:
+For this examples, we assume your app is in /srv/www/app. In /etc/apache2/sites-available/000-default.conf file add:
 ```
     ServerName 0.0.0.0
 
@@ -57,4 +57,4 @@ sudo apt-get install -y apache2-utils
 </VirtualHost>
 ```
 
-3. Make sure you create the /srv/www/app/apache/logs folder
+Make sure you create the /srv/www/app/apache/logs folder
