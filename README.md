@@ -26,10 +26,12 @@ These instructions are for Debian, for other Linux flavors modify the httpd part
 
 1. Make sure httpd and mod_wsgi are installed
 
-> sudo apt-get install -y apache2
-> sudo apt-get install -y libapache2-mod-wsgi
-> sudo a2enmod rewrite
-> sudo apt-get -y apache2-utils
+```
+sudo apt-get install -y apache2
+sudo apt-get install -y libapache2-mod-wsgi
+sudo a2enmod rewrite
+sudo apt-get -y apache2-utils
+```
 
 2. In /etc/apache2/sites-available/000-default.conf file add:
 ```
