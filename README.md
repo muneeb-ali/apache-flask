@@ -86,4 +86,3 @@ For this examples, we assume your app is in /srv/www/app. In /etc/apache2/sites-
 </VirtualHost>
 ```
 
-Make sure you create the /srv/www/app/apache/logs folder
