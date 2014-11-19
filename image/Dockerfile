@@ -19,6 +19,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 
 # Update the repository sources list once more
 RUN apt-get update
+RUN apt-get -y upgrade
 
 # Install Apache2
 RUN apt-get install -y \
@@ -26,6 +27,11 @@ RUN apt-get install -y \
 	apache2-utils \
 	libapache2-mod-wsgi \
 	git \
+	python-pip
+
+RUN git clone https://github.com/muneeb-ali/apache-flask.git /srv/www/app
+RUN cp -f /srv/www/app/apache/config/default.conf /etc/apache2/sites-available/000-default.conf
+RUN pip install -r /srv/www/app/requirements.txt 
 
 # Create the default data directory
 RUN mkdir -p /srv/www
