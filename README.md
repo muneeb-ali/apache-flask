@@ -22,36 +22,39 @@ Python Flask (web framework) deployed with Apache
 
 ### Deploying with Apache
 
-These instructions are for Debian, for other Linux flavors modify the httpd parts accordingly
+These instructions are for Debian, for other Linux flavors modify the Apache parts accordingly
 
-1. Make sure httpd and mod_wsgi are installed
+Make sure apache2 and mod_wsgi are installed
 
-> sudo apt-get install -y apache2
-> sudo apt-get install -y libapache2-mod-wsgi
-> sudo a2enmod rewrite
-> sudo apt-get -y apache2-utils
-
-2. In /etc/apache2/sites-available/000-default.conf file add:
 ```
-    <VirtualHost _default_:80>
-    DocumentRoot /path/to/application
+sudo apt-get install -y apache2
+sudo apt-get install -y libapache2-mod-wsgi
+sudo a2enmod rewrite
+sudo apt-get install -y apache2-utils
+```
 
-    WSGIDaemonProcess sandbox user=<username> group=<groupname> threads=15 maximum-requests=10000 python-path=/path/to/application/path/to/python/site-packages
-    WSGIScriptAlias / /path/to/application/apache/apache_flask.wsgi
-    WSGIProcessGroup <name_of_application>
+For this examples, we assume your app is in /srv/www/app. In /etc/apache2/sites-available/000-default.conf file add:
+```
+    ServerName 0.0.0.0
 
-    CustomLog "|/usr/sbin/rotatelogs /path/to/application/apache/logs/access.log.%Y%m%d-%H%M%S 5M" combined
-    ErrorLog "|/usr/sbin/rotatelogs /path/to/application/apache/logs/error.log.%Y%m%d-%H%M%S 5M"
+<VirtualHost _default_:80>
+    DocumentRoot /srv/www/app
+
+    WSGIDaemonProcess python-app user=www-data group=www-data threads=15 maximum-requests=10000 python-path=/usr/local/lib/python2.7/dist-packages
+    WSGIScriptAlias / /srv/www/app/apache/apache.wsgi
+    WSGIProcessGroup python-app
+
+    CustomLog "|/usr/bin/rotatelogs /srv/www/app/apache/logs/access.log.%Y%m%d-%H%M%S 5M" combined
+    ErrorLog "|/usr/bin/rotatelogs /srv/www/app/apache/logs/error.log.%Y%m%d-%H%M%S 5M"
     LogLevel warn
 
-    <Directory /path/to/application>
+    <Directory /srv/www/app>
         Order deny,allow
         Allow from all
+        Require all granted
     </Directory>
 
-    </VirtualHost>
+</VirtualHost>
 ```
 
-3. Make sure you create the /path/to/application/apache/logs folder
-
-4. Make sure that in WSGIDaemonProcess, the python-path=/path/to/application/path/to/python/site-packages points to the virtualenv that you created with "pip install -r requirements.txt"
+Make sure you create the /srv/www/app/apache/logs folder
