@@ -5,7 +5,7 @@ Python Flask (web framework) deployed with Apache
 
 ### Quick Start (using Docker)
 
-For a quick demo, you can use a pre-build docker image: 
+For a quick demo, you can use a pre-built docker image: 
 
 > docker run -d -p 80:80 muneeb/apache-flask 
 
